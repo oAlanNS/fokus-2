@@ -3,6 +3,7 @@ const focoBt = document.querySelector(".app__card-button--foco");
 const curtoBt = document.querySelector(".app__card-button--curto");
 const longoBt = document.querySelector(".app__card-button--longo");
 const banner = document.querySelector('.app__image');
+const titulo = document.querySelector(".app__title");
 
 focoBt.addEventListener('click', () => {
     alterarContexto('foco');
@@ -19,10 +20,28 @@ longoBt.addEventListener('click', () => {
 
 function alterarContexto(contexto) {
     html.setAttribute('data-contexto', contexto);
-    banner.setAttribute(
-    'src',
-    `./imagens/${contexto}.png`
-    )
+    banner.setAttribute('src',`./imagens/${contexto}.png`)
     console.log(`Modo selecionado: ${contexto}`);
+    
+    switch(contexto){
+    case 'foco':
+        mensagem = `Otimize sua produtividade,<br>
+        <strong class="app__title-strong">
+        mergulhe no que importa.</strong>`;
+        break;
+    case 'descanso-curto':
+        mensagem = `Que tal dar uma respirada?
+        <strong class="app__title-strong">
+        Faça uma pausa curta!</strong>`;
+        break;
+    case 'descanso-longo':
+        mensagem = `Hora de voltar à superfície.
+        <strong class="app__title-strong">
+        Faça uma pausa longa.</strong>`;
+        break;
+    default:
+        return;
+    }
+    titulo.innerHTML = mensagem;
 };
 
