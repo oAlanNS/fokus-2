@@ -4,6 +4,30 @@ const curtoBt = document.querySelector(".app__card-button--curto");
 const longoBt = document.querySelector(".app__card-button--longo");
 const banner = document.querySelector('.app__image');
 const titulo = document.querySelector(".app__title");
+const botoes = document.querySelectorAll('.app__card-button');
+const musicaFocoInput = document.querySelector(
+ '#alternar-musica'
+);
+const musica = new Audio('./sons/luna-rise-part-one.mp3');
+
+musica.loop = true;
+
+let ultimaMudanca = 0;
+musicaFocoInput.addEventListener('change', async () => {
+    const mudanca = ++ultimaMudanca;
+    if (musicaFocoInput.checked) {
+        try {
+            await musica.play();
+            } catch (erro) {
+            if (mudanca !== ultimaMudanca) return;
+
+            console.error('Não foi possível reproduzir o áudio:', erro);
+            musicaFocoInput.checked = false;
+            }
+    } else {
+    musica.pause();
+    }
+});
 
 focoBt.addEventListener('click', () => {
     alterarContexto('foco');
@@ -19,6 +43,12 @@ longoBt.addEventListener('click', () => {
 });
 
 function alterarContexto(contexto) {
+    // Remove o destaque de todos os botões
+    botoes.forEach((botao) => {
+    botao.classList.remove('active');
+    });
+    
+    // Atualiza o contexto e a imagem
     html.setAttribute('data-contexto', contexto);
     banner.setAttribute('src',`./imagens/${contexto}.png`)
     console.log(`Modo selecionado: ${contexto}`);
