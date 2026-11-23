@@ -42,6 +42,44 @@ longoBt.addEventListener('click', () => {
     longoBt.classList.add('active');
 });
 
+let tempoDecorridoEmSegundos = 5;
+let intervaloId = null;
+
+const startPauseBt = document.querySelector('#start-pause');
+// Cancela o intervalo ativo
+function zerar() {
+    clearInterval(intervaloId);
+    intervaloId = null;
+}
+// Executa a contagem regressiva
+const contagemRegressiva = () => {
+    if (tempoDecorridoEmSegundos <= 0) {
+        zerar();
+        return;
+ }
+    tempoDecorridoEmSegundos -= 1;
+    console.log(
+        'Temporizador: ' + tempoDecorridoEmSegundos
+ );
+    if (tempoDecorridoEmSegundos === 0) {
+        zerar();
+        alert('Tempo finalizado!');
+ }
+}
+// Inicia ou pausa a contagem
+function iniciarOuPausar() {
+    if (intervaloId !== null) {
+        zerar();
+        return;
+    }
+    if (tempoDecorridoEmSegundos <= 0) {
+        return;
+    }
+    intervaloId = setInterval(contagemRegressiva, 1000);
+}
+// Associa o temporizador ao botão
+startPauseBt.addEventListener('click', iniciarOuPausar);
+
 function alterarContexto(contexto) {
     // Remove o destaque de todos os botões
     botoes.forEach((botao) => {
